@@ -32,55 +32,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun FavoriteQuotesScreen(favoriteQuotes: List<Quote>,
-                         quotesListViewModel: QuotesListViewModel = QuotesListViewModel(),
-                         onDeleteTask: (Quote) -> Unit,
-                         //onToggleTask: (Quote) -> Unit,
+fun FavoriteQuotesScreen(
+    getFavoriteQuotes: () -> List<Quote>,
+    removeFavoriteQuote: (Quote) -> Unit,
+    toggleFavoriteQuote: (Quote) -> Unit,
 ){
     Text("Favorite Quotes")
     LazyColumn{
         items(
-            items = favoriteQuotes,
-            key = {quote -> quote.id}
+            items = getFavoriteQuotes(),
+            key = {quote:Quote -> quote.id}
         ) {quote ->
-            QuoteItem(modifier = Modifier, quote = quote, onDelete = onDeleteTask, toggleFavoriteQuote = quotesListViewModel::toggleFavoriteQuote)
-//            val currentTask by rememberUpdatedState(quote)
-//            val dismissState= rememberDismissState(
-//                confirmValueChange ={
-//                    when(it){
-//                        DismissValue.DismissedToEnd ->{
-//                            onDeleteTask(currentTask)
-//                            true
-//                        }
-//                        else -> false
-//                    }
-//                }
-//            )
-//            Modifier
-//                .padding(vertical = 1.dp)
-//            setOf(
-//                SwipeToDismissBoxValue.EndToStart,
-//                SwipeToDismissBoxValue.StartToEnd
-//            )
-//            SwipeToDismissBox(
-//                state = dismissState,
-//                backgroundContent = fun RowScope.() {
-//                    SwipeBackground(dismissState)
-//                },
-//                modifier = Modifier
-//                    .padding(vertical = 1.dp)
-//                    .animateItemPlacement(),
-//                enableDismissFromStartToEnd = enableDismissFromStartToEnd,
-//                enableDismissFromEndToStart = enableDismissFromEndToStart,
-//                content = fun RowScope.() {
-//                    QuoteCard(
-//                        quote = quote,
-//                        onFavoriteClick = {
-//                            quotesListViewModel.toggleFavoriteQuote(currentTask)
-//                        }
-//                    )
-//                })
-
+            QuoteItem(modifier = Modifier,
+                quote = quote,
+                onDelete = removeFavoriteQuote,
+                toggleFavoriteQuote = toggleFavoriteQuote)
         }
     }
 
@@ -192,8 +158,8 @@ fun DismissBackground(dismissState: SwipeToDismissBoxState){
 @Composable
 fun QuoteItem(
     quote: Quote,
-    modifier : Modifier = Modifier,
-    onDelete : (Quote) -> Unit,
+    modifier: Modifier = Modifier,
+    onDelete: (Quote) ->Unit,
     toggleFavoriteQuote: (Quote) -> Unit,
 ){
     val context = LocalContext.current

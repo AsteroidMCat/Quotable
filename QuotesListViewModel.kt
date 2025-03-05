@@ -1,12 +1,17 @@
 package com.zybooks.quotable.ui.theme
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 
 class QuotesListViewModel: ViewModel() {
-    val quoteList = mutableStateListOf<Quote>()
-    private val favoriteQuotes = mutableListOf<Quote>()
 
+    private val quoteList = mutableStateListOf<Quote>()
+    private val favoriteQuotes = mutableStateListOf<Quote>()
+
+    fun getQuoteList(): SnapshotStateList<Quote> {
+        return quoteList
+    }
     fun addQuote(body:String, author:String){
         quoteList.add(Quote(body = body, author=author))
     }
@@ -15,8 +20,12 @@ class QuotesListViewModel: ViewModel() {
         quoteList.remove(quote)
     }
 
-    fun deleteAllTasks(){
-        quoteList.clear()
+    fun getFavoriteQuotes():List<Quote>{
+        return favoriteQuotes
+    }
+
+    fun removeFavoriteQuote(quote:Quote){
+        favoriteQuotes.remove(quote)
     }
 
     val favoriteQuotesExists: Boolean

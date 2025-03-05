@@ -9,4 +9,5 @@ data class Quote(
     val author: String = "",
     val favorite: Boolean = false,
     val modifier : Modifier = Modifier
-)
+) {
+}

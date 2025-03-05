@@ -24,10 +24,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AddQuoteScreen(
-    modifier : Modifier = Modifier,
-    quotesListViewModel: QuotesListViewModel = QuotesListViewModel()
+    addQuote: (String, String) -> Unit = {_,_ ->},
 ){
-    AddQuote(onEnterQuote = quotesListViewModel::addQuote)
+    AddQuote(onEnterQuote = addQuote)
 }
 
 
@@ -82,9 +81,9 @@ fun AddQuote(onEnterQuote: (String, String) -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun AddQuoteScreenPreview() {
-    AddQuoteScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun AddQuoteScreenPreview() {
+//    AddQuoteScreen()
+//}
 
